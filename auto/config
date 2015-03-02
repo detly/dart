@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# NOTE: In order to work around bug #773833 you need to patch
+# /usr/lib/live/build/binary_hdd as per this bug report:
+# https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773833
+#
+# That is actually the file on the machine running live-build, not the chroot.
+
+set -e
+
+APT_CACHER_NG_LOC="http://192.168.1.100:3142"
+MIR_REP="${APT_CACHER_NG_LOC}/ftp.iinet.net.au/debian/debian/"
+MIR_SEC="${APT_CACHER_NG_LOC}/security.debian.org/"
+DISTRO="wheezy"
+HOSTNAME="dart"
+
+export http_proxy=${APT_CACHER_NG_LOC}
+
+lb config noauto \
+  -a amd64 \
+  -b hdd \
+  --mode debian \
+  --bootloader syslinux \
+  --debian-installer false \
+  -d ${DISTRO} \
+  --memtest none \
+  --apt-http-proxy ${APT_CACHER_NG_LOC} \
+  --parent-mirror-bootstrap ${MIR_REP} \
+  --parent-mirror-chroot-security ${MIR_SEC} \
+  --parent-mirror-binary ${MIR_REP} \
+  --parent-mirror-binary-security ${MIR_SEC} \
+  --mirror-bootstrap ${MIR_REP} \
+  --mirror-chroot-security ${MIR_SEC} \
+  --mirror-binary ${MIR_REP} \
+  --mirror-binary-security ${MIR_SEC} \
+  --keyring-packages "debian-archive-keyring kali-archive-keyring" \
+  --firmware-binary true \
+  --firmware-chroot true \
+  --source false \
+  --apt-indices false \
+  --cache-packages false \
+  --archive-areas 'main contrib non-free' \
+  --bootappend-live "boot=live live-config username=jason sudo openssh-server noeject quiet persistent console=tty0 console=ttyS0,115200n8 hostname=${HOSTNAME}" \
+  "${@}"
+

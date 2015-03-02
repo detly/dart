@@ -1,0 +1,2 @@
+deb http://archive.kali.org/kali kali main non-free contrib
+deb http://archive.kali.org/kali-security kali/updates main contrib non-free

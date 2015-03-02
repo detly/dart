@@ -1,0 +1,28 @@
+#!/bin/sh
+
+STATEFILE=/var/lib/live/config/serialconsole
+
+Serialconsole ()
+{
+	# Checking that we haven't already run
+	if [ -e ${STATEFILE} ]
+	then
+		return
+	fi
+
+	echo -n " serial console"
+
+	Configure_serialconsole
+}
+
+Configure_serialconsole ()
+{
+	# Note unusual delimiters
+	sed -i -e "s|#\(T0:.*\)|\1|" /etc/inittab
+	init q
+
+	# Creating state file
+	touch ${STATEFILE}
+}
+
+Serialconsole
