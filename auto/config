@@ -24,7 +24,7 @@ lb config noauto \
   --debian-installer false \
   -d ${DISTRO} \
   --memtest none \
-  --apt-http-proxy ${DART_APT_CACHE} \
+  --apt-http-proxy "${DART_APT_CACHE}" \
   --parent-mirror-bootstrap ${MIR_REP} \
   --parent-mirror-chroot-security ${MIR_SEC} \
   --parent-mirror-binary ${MIR_REP} \
