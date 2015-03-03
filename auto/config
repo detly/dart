@@ -2,9 +2,14 @@
 
 set -e
 
-# DART_APT_CACHE="192.168.1.100:3142"
-MIR_REP="http://${DART_APT_CACHE}/ftp.iinet.net.au/debian/debian/"
-MIR_SEC="http://${DART_APT_CACHE}/security.debian.org/"
+if [ -z "${DART_APT_CACHE}" ] ; then
+  MIR_PREFIX="http://${DART_APT_CACHE}/"
+else
+  MIR_PREFIX="http://"
+fi
+
+MIR_REP="${MIR_PREFIX}http.debian.net/debian/"
+MIR_SEC="${MIR_PREFIX}security.debian.org/"
 DISTRO="wheezy"
 HOSTNAME=${DART_HOSTNAME:-"dart"}
 USERNAME=${DART_USER:-"user"}
