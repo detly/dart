@@ -5,7 +5,7 @@ set -e
 if [ -z "${DART_APT_CACHE}" ] ; then
   MIR_PREFIX="http://"
 else
-  MIR_PREFIX="http://${DART_APT_CACHE}/"
+  MIR_PREFIX="${DART_APT_CACHE}/"
 fi
 
 MIR_REP="${MIR_PREFIX}http.debian.net/debian/"
