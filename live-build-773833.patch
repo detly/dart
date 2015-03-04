@@ -1,0 +1,11 @@
+--- a/usr/lib/live/build/binary_hdd	2014-10-25 23:21:09.000000000 +1100
++++ b/usr/lib/live/build/binary_hdd	2015-03-04 21:37:08.761576489 +1100
+@@ -191,7 +191,7 @@
+ 
+ 		if [ "${LB_BOOTLOADER}" = "syslinux" ]
+ 		then
+-			dd if=chroot/usr/lib/${_BOOTLOADER}/mbr.bin of=${FREELO} bs=440 count=1
++			dd if=chroot/usr/lib/SYSLINUX/mbr.bin of=${FREELO} bs=440 count=1
+ 		fi
+ 		;;
+ 

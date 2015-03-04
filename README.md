@@ -6,7 +6,7 @@ Note that this only works under live-build 4 at the moment. And I can't get EFI 
 
 ## Note about live-build
 
-In order to work around [bug #773833](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773833) you need to patch `/usr/lib/live/build/binary_hdd`. That is actually the file on the machine running live-build, not the chroot.
+In order to work around [bug #773833](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773833) you need to patch `/usr/lib/live/build/binary_hdd`. That is actually the file on the machine running live-build, not the chroot. See the patch file `live-build-773833.patch`.
 
 ## Configuration
 
