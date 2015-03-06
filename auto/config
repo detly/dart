@@ -10,9 +10,9 @@ fi
 
 MIR_REP="${MIR_PREFIX}http.debian.net/debian/"
 MIR_SEC="${MIR_PREFIX}security.debian.org/"
-DISTRO="wheezy"
-HOSTNAME=${DART_HOSTNAME:-"dart"}
-USERNAME=${DART_USER:-"user"}
+DISTRO="jessie"
+DART_HOSTNAME=${DART_HOSTNAME:-"dart"}
+DART_USERNAME=${DART_USERNAME:-"user"}
 
 export http_proxy=${DART_APT_CACHE}
 
@@ -33,13 +33,13 @@ lb config noauto \
   --mirror-chroot-security ${MIR_SEC} \
   --mirror-binary ${MIR_REP} \
   --mirror-binary-security ${MIR_SEC} \
-  --keyring-packages "debian-archive-keyring kali-archive-keyring" \
+  --keyring-packages "debian-archive-keyring" \
   --firmware-binary true \
   --firmware-chroot true \
   --source false \
   --apt-indices false \
   --cache-packages false \
   --archive-areas 'main contrib non-free' \
-  --bootappend-live "boot=live live-config username=${USER} sudo openssh-server noeject quiet persistent console=tty0 console=ttyS0,115200n8 hostname=${HOSTNAME}" \
+  --bootappend-live "boot=live components autologin quiet console=tty0 console=ttyS0,115200 nopersistence noeject username=${DART_USERNAME} hostname=${DART_HOSTNAME}" \
   "${@}"
 
