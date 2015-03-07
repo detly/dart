@@ -1,0 +1,7 @@
+Section: misc
+Priority: optional
+Standards-Version: 3.9.2
+
+Package: winexe
+Version: 1.1~20130620-0kali6.dummy
+Description: Dummy package to get around winexe dependency problem.

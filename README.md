@@ -1,12 +1,16 @@
 # Dart
 
-A hybrid Kali/Debian Wheezy distribution.
+A hybrid Kali/Debian Jessie distribution.
 
 Note that this only works under live-build 4 at the moment. And I can't get EFI booting to work, so you may have to tinker with your boot options.
 
 ## Note about live-build
 
 In order to work around [bug #773833](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=773833) you need to patch `/usr/lib/live/build/binary_hdd`. That is actually the file on the machine running live-build, not the chroot. See the patch file `live-build-773833.patch`.
+
+## Note about WinEXE
+
+Kali's `winexe` package depends on some Samba library that isn't in Jessie. Since I don't use `winexe`, I avoided the whole problem by creating an `equivs` dummy package. I opted not to put the equiv package building code in `auto/config` because it requires a great deal more dependencies than `live-build`.
 
 ## Configuration
 
