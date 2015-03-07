@@ -4,11 +4,20 @@ set -e
 
 TARGET_TTY=$1
 TARGET_USER=$2
+TARGET_SERIAL=$3
 
 if [ -z "${TARGET_TTY}" -o -z "${TARGET_USER}" ]
 then
-    echo "Usage: create_autologin_conf TTY_NAME USERNAME"
+    echo "Usage: create_autologin_conf TTY_NAME USERNAME SERIAL_FLAG"
     exit 1
+fi
+
+if [ -n "${TARGET_SERIAL}" ]
+then
+    SYSTEMD_AUTOLOGIN_TYPE="serial-"
+    AGETTY_EXTRA="115200,38400,9600 vt102"
+else
+    AGETTY_EXTRA="38400 linux"
 fi
 
 SYSTEMD_AUTOLOGIN_DIR="config/includes.chroot/etc/systemd/system/getty@${1}.service.d"
@@ -16,5 +25,5 @@ mkdir -p "${SYSTEMD_AUTOLOGIN_DIR}"
 cat >"${SYSTEMD_AUTOLOGIN_DIR}/autologin.conf" <<EOF
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty --autologin ${TARGET_USER} --noclear %I 38400 linux
+ExecStart=-/sbin/agetty --autologin ${TARGET_USER} --noclear %I ${AGETTY_EXTRA}
 EOF

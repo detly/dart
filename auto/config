@@ -40,10 +40,13 @@ lb config noauto \
   --apt-indices false \
   --cache-packages false \
   --archive-areas 'main contrib non-free' \
-  --bootappend-live "boot=live components noeject quiet nopersistence console=tty0 console=ttyS0,115200n8 hostname=${DART_HOSTNAME} username=${DART_USERNAME}" \
+  --bootappend-live "boot=live components noeject quiet nopersistence console=tty0 hostname=${DART_HOSTNAME} username=${DART_USERNAME}" \
   "${@}"
 
 # Creates the necessary autologin configuration for systemd. I didn't make hooks
 # because I don't know how to get the live username during the chroot stage.
-AUTOLOGIN_TERMS="tty0 tty1 tty2 tty3 tty4 tty5 tty6 ttyS0"
+AUTOLOGIN_TERMS="tty0 tty1 tty2 tty3 tty4 tty5 tty6"
 echo -n "${AUTOLOGIN_TERMS}" | xargs -I _ -n 1 -d " " ./create_autologin_conf _ "${DART_USERNAME}"
+
+AUTOLOGIN_STERMS="ttyS0"
+echo -n "${AUTOLOGIN_STERMS}" | xargs -I _ -n 1 -d " " ./create_autologin_conf _ "${DART_USERNAME}" 1
