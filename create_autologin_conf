@@ -1,0 +1,20 @@
+#!/bin/sh
+
+set -e
+
+TARGET_TTY=$1
+TARGET_USER=$2
+
+if [ -z "${TARGET_TTY}" -o -z "${TARGET_USER}" ]
+then
+    echo "Usage: create_autologin_conf TTY_NAME USERNAME"
+    exit 1
+fi
+
+SYSTEMD_AUTOLOGIN_DIR="config/includes.chroot/etc/systemd/system/getty@${1}.service.d"
+mkdir -p "${SYSTEMD_AUTOLOGIN_DIR}"
+cat >"${SYSTEMD_AUTOLOGIN_DIR}/autologin.conf" <<EOF
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin ${TARGET_USER} --noclear %I 38400 linux
+EOF
