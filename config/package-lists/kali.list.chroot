@@ -1,6 +1,3 @@
-kali-linux
-kali-linux-wireless
-
 ## Security auditing - wireless
 reaver
 bully
@@ -9,10 +6,6 @@ aircrack-ng
 ## Security auditing - data
 
 ## Security auditing - password generation
-crunch
-john
-lcrack
-wordlists
 
 ## Wireless tools
 iw
