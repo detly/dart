@@ -10,6 +10,7 @@ aircrack-ng
 ## Wireless tools
 iw
 rfkill
+tcpdump
 
 #if ARCHITECTURES i386 amd64
 firmware-b43legacy-installer
