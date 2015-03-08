@@ -32,6 +32,9 @@ sleep 60
 # ...and an alternative to -g that counts unsuccessful attempts.
 /bin/kill -s SIGINT $REAVER_PID
 
-reaver --help > reaver_help.txt 2>&1
+reaver --help >reaver_help.txt 2>&1
+
+ifconfig wlan0 >ifconfig_wlan0.txt 2>&1
+ifconfig mon0 >ifconfig_mon0.txt 2>&1
 
 /bin/kill -s SIGINT $TCPDUMP_PID
