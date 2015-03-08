@@ -1,7 +1,7 @@
 #!/bin/sh
-export BSSID=64:70:02:a0:d5:17
-export ESSID="Jeff Winger's Wireless Hairdryer"
-export CHAN=6
+export BSSID=AA:BB:CC:DD:EE:FF
+export ESSID="AP Essid"
+export CHAN=1
 
 service network-manager stop
 sleep 2
