@@ -13,7 +13,7 @@ sleep 5
 airmon-ng start wlan0 ${CHAN}
 sleep 5
 
-wash -i mon0 -c ${CHAN} 2>&1 > wash_log.txt &
+wash -i mon0 -c ${CHAN}> wash_log.txt 2>&1 &
 WASH_PID=$!
 sleep 20
 /bin/kill -s SIGINT $WASH_PID
@@ -26,10 +26,12 @@ rm ./*.wpc
 rm /etc/reaver/reaver.db
 rm /etc/reaver/*.wpc
 
-reaver -i mon0 -e "${ESSID}" -b ${BSSID} -c ${CHAN} -vv -S 2>&1 > reaver_log.txt &
+reaver -i mon0 -e "${ESSID}" -b ${BSSID} -c ${CHAN} -vv -S > reaver_log.txt 2>&1 &
 REAVER_PID=$!
 sleep 60
 # ...and an alternative to -g that counts unsuccessful attempts.
 /bin/kill -s SIGINT $REAVER_PID
+
+reaver --help > reaver_help.txt 2>&1
 
 /bin/kill -s SIGINT $TCPDUMP_PID
